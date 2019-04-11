@@ -13,13 +13,6 @@ use OxidEsales\EshopCommunity\Tests\Acceptance\AdminTestCase;
 /** Ajax functionality */
 class AjaxFunctionalityAdminTest extends AdminTestCase
 {
-    public function setUp()
-    {
-        $this->installModule('oxid/test11');
-        $this->installModule('oxid/test12');
-        parent::setUp();
-    }
-
     /**
      * ajax: Distributors -> Assign Products
      *
@@ -1891,6 +1884,8 @@ class AjaxFunctionalityAdminTest extends AdminTestCase
      */
     public function testOxAjaxContainerClassResolution()
     {
+        $this->installModule('oxid/test11');
+
         $this->loginAdmin("Extensions", "Modules");
 
         $this->activateModule("Test module #11");
@@ -1922,6 +1917,7 @@ class AjaxFunctionalityAdminTest extends AdminTestCase
      */
     public function testOxAjaxContainerClassResolutionMetadata1Module()
     {
+        $this->installModule('oxid/test12');
         $this->loginAdmin("Extensions", "Modules");
 
         $this->activateModule("Test module #12");
