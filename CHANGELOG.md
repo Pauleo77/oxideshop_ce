@@ -124,7 +124,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `\OxidEsales\EshopCommunity\Core\Module\ModuleChainsGenerator::cleanModuleFromClassChain()` If you want to clean a module from the class chain, deactivate the module.
 - `\OxidEsales\EshopCommunity\Core\Module\ModuleChainsGenerator::getDisabledModuleIds()` Use `OxidEsales\EshopCommunity\Internal\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface` instead to get inactive modules.
 - `\OxidEsales\EshopCommunity\Core\Module\ModuleChainsGenerator::getModuleDirectoryByModuleId()` Use `\OxidEsales\EshopCommunity\Internal\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface` instead.
-
+- `\OxidEsales\EshopCommunity\Core\Module\ModuleSmartyPluginDirectoryValidator`
+- `\OxidEsales\EshopCommunity\Core\Module\ModuleSmartyPluginDirectoryRepository::save`
+- `\OxidEsales\EshopCommunity\Core\Module\ModuleSmartyPluginDirectories::getWithRelativePath`
+- `\OxidEsales\EshopCommunity\Core\Module\ModuleSmartyPluginDirectories::add`
+- `\OxidEsales\EshopCommunity\Core\Module\ModuleSmartyPluginDirectories::remove`
 
 - Classes:
     - `OxidEsales\EshopCommunity\Core\Module\ModuleInstaller` 
