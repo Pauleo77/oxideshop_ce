@@ -89,6 +89,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - Was `HELP_ENERAL_NAME` changed to `HELP_GENERAL_NAME`
 - Drop support for PHP 7.0
 - Use user from Order::validateOrder method in validatePayment as well [PR-706](https://github.com/OXID-eSales/oxideshop_ce/pull/706)
+- Config option `aDisabledModules` isn't used anymore.
+- Config option `aModulePaths`: module path will be added to the option only after the module activation.   
 
 ### Removed
 - Removed old not used blAutoSearchOnCat option from shop_config tab [PR-654](https://github.com/OXID-eSales/oxideshop_ce/pull/654)
