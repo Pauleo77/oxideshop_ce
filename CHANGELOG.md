@@ -88,6 +88,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   breaks backwards compatibility for modules, which directly override `_dbLogin` or one of the methods in the call stack.
 - Fix typo in ident for help near name/surname in `application/views/admin/tpl/shop_main.tpl` [PR-701](https://github.com/OXID-eSales/oxideshop_ce/pull/701)
     - Was `HELP_ENERAL_NAME` changed to `HELP_GENERAL_NAME`
+- Methods in the following classes return information based on the project configuration. [See documentation about module installation](https://docs.oxid-esales.com/developer/en/6.2/modules/installation/)
+    - `\OxidEsales\EshopCommunity\source\Module\Core\Module`
+    - `\OxidEsales\EshopCommunity\source\Module\Core\ModuleList` 
 - Config option `aDisabledModules` isn't used anymore.
 - Config option `aModulePaths`: module path will be added to the option only after the module activation.   
 
