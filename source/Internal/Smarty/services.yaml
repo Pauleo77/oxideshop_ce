@@ -13,8 +13,7 @@ services:
     public: false
   OxidEsales\EshopCommunity\Internal\Smarty\SmartyConfigurationFactoryInterface:
     class: OxidEsales\EshopCommunity\Internal\Smarty\SmartyConfigurationFactory
-    arguments:
-      - '@OxidEsales\EshopCommunity\Internal\Smarty\SmartyContextInterface'
+    autowire: true
     public: false
   OxidEsales\EshopCommunity\Internal\Smarty\SmartyFactoryInterface:
     class: OxidEsales\EshopCommunity\Internal\Smarty\SmartyFactory
