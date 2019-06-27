@@ -22,12 +22,7 @@ class MetaDataNormalizer implements MetaDataNormalizerInterface
      */
     public function normalizeData(array $data): array
     {
-        $normalizedMetaData = [];
-        foreach ($data as $key => $value) {
-            $normalizedKey = strtolower($key);
-            $normalizedValue = $this->normalizeValues($normalizedKey, $value);
-            $normalizedMetaData[$normalizedKey] = $normalizedValue;
-        }
+        $normalizedMetaData = $data;
 
         if (isset($normalizedMetaData[MetaDataProvider::METADATA_SETTINGS])) {
             $normalizedMetaData[MetaDataProvider::METADATA_SETTINGS] = $this->convertModuleSettingConstraintsToArray($normalizedMetaData[MetaDataProvider::METADATA_SETTINGS]);
@@ -77,47 +72,5 @@ class MetaDataNormalizer implements MetaDataNormalizerInterface
         }
 
         return $normalizedMetaData;
-    }
-
-    /**
-     * @param string $key
-     * @param mixed  $value
-     *
-     * @return mixed
-     */
-    private function normalizeValues($key, $value)
-    {
-        $subItemsToNormalize = [
-            MetaDataProvider::METADATA_DESCRIPTION,
-            MetaDataProvider::METADATA_BLOCKS,
-            MetaDataProvider::METADATA_SETTINGS,
-            MetaDataProvider::METADATA_FILES
-        ];
-        if (\is_array($value) && in_array($key, $subItemsToNormalize, true)) {
-            $normalizedValue = $this->lowerCaseArrayKeysRecursive($value);
-        } else {
-            $normalizedValue = $value;
-        }
-
-        return $normalizedValue;
-    }
-
-    /**
-     * @param array $array
-     *
-     * @return array
-     */
-    private function lowerCaseArrayKeysRecursive(array $array): array
-    {
-        return array_map(
-            function ($item) {
-                if (\is_array($item)) {
-                    $item = $this->lowerCaseArrayKeysRecursive($item);
-                }
-
-                return $item;
-            },
-            array_change_key_case($array)
-        );
     }
 }

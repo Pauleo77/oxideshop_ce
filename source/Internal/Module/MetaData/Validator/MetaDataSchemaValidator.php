@@ -6,7 +6,7 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Module\MetaData\Validator;
 
-use OxidEsales\EshopCommunity\Internal\Module\MetaData\Event\BadMetaDataFoundEvent;
+use OxidEsales\EshopCommunity\Internal\Module\MetaData\Exception\UnsupportedMetaDataKeyException;
 use OxidEsales\EshopCommunity\Internal\Module\MetaData\Exception\UnsupportedMetaDataValueTypeException;
 use OxidEsales\EshopCommunity\Internal\Module\MetaData\Service\MetaDataProvider;
 use OxidEsales\EshopCommunity\Internal\Module\MetaData\Service\MetaDataSchemataProviderInterface;
@@ -88,17 +88,18 @@ class MetaDataSchemaValidator implements MetaDataSchemaValidatorInterface
     }
 
     /**
-     * @param array  $supportedMetaDataKeys
+     * @param array $supportedMetaDataKeys
      *
      * @param string $metaDataKey
+     * @throws UnsupportedMetaDataKeyException
      */
-    private function validateMetaDataKey(array $supportedMetaDataKeys, string $metaDataKey)
+    private function validateMetaDataKey(array $supportedMetaDataKeys, string $metaDataKey): void
     {
         if (false === array_key_exists($metaDataKey, $supportedMetaDataKeys)) {
-            $message = 'The metadata key "' . $metaDataKey . '" is not supported in metadata version "' . $this->currentValidationMetaDataVersion . '"';
-
-            $event = new BadMetaDataFoundEvent($this->metaDataFilePath, $message);
-            $this->eventDispatcher->dispatch($event::NAME, $event);
+            throw new UnsupportedMetaDataKeyException(
+                'The metadata key "' . $metaDataKey . '" is not supported in metadata version "'
+                . $this->currentValidationMetaDataVersion . '".'
+            );
         }
     }
 
