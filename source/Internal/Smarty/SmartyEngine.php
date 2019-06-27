@@ -6,17 +6,14 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Smarty;
 
+use OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineInterface;
+
 /**
  * Class SmartyEngine
  * @package OxidEsales\EshopCommunity\Internal\Smarty
  */
-class SmartyEngine
+class SmartyEngine implements TemplateEngineInterface
 {
-    /**
-     * @var string
-     */
-    private $cacheId;
-
     /**
      * The template engine.
      *
@@ -45,17 +42,17 @@ class SmartyEngine
      * Renders a template.
      *
      * @param string $name       A template name
-     * @param array  $parameters An array of parameters to pass to the template
+     * @param array  $context An array of parameters to pass to the template
      *
      * @return string The evaluated template as a string
      */
-    public function render(string $name, array $parameters = [])
+    public function render(string $name, array $context = []): string
     {
-        foreach ($parameters as $key => $value) {
+        foreach ($context as $key => $value) {
             $this->engine->assign($key, $value);
         }
-        if (isset($this->cacheId)) {
-            return $this->engine->fetch($name, $this->cacheId);
+        if (isset($context['oxEngineTemplateId'])) {
+            return $this->engine->fetch($name, $context['oxEngineTemplateId']);
         }
         return $this->engine->fetch($name);
     }
@@ -64,18 +61,25 @@ class SmartyEngine
      * Renders a fragment of the template.
      *
      * @param string $fragment   The template fragment to render
-     * @param array  $parameters An array of parameters to pass to the template
+     * @param string $fragmentId The Id of the fragment
+     * @param array  $context    An array of parameters to pass to the template
      *
-     * @return string The evaluated template as a string
+     * @return string
      */
-    public function renderFragment(string $fragment, array $parameters = [])
+    public function renderFragment(string $fragment, string $fragmentId, array $context = []): string
     {
+        // save old tpl data
+        $tplVars = $this->engine->_tpl_vars;
+        $forceRecompile = $this->engine->force_compile;
         $this->engine->force_compile = true;
-        foreach ($parameters as $key => $value) {
+        foreach ($context as $key => $value) {
             $this->engine->assign($key, $value);
         }
         $this->engine->oxidcache = new \OxidEsales\Eshop\Core\Field($fragment, \OxidEsales\Eshop\Core\Field::T_RAW);
-        return $this->engine->fetch($this->cacheId);
+        $result =  $this->engine->fetch($fragmentId);
+        $this->engine->_tpl_vars = $tplVars;
+        $this->engine->force_compile = $forceRecompile;
+        return $result;
     }
 
     /**
@@ -85,7 +89,7 @@ class SmartyEngine
      *
      * @return bool true if the template exists, false otherwise
      */
-    public function exists($name)
+    public function exists(string $name): bool
     {
         return $this->engine->template_exists($name);
     }
@@ -94,7 +98,7 @@ class SmartyEngine
      * @param string $name
      * @param mixed  $value
      */
-    public function addGlobal($name, $value)
+    public function addGlobal(string $name, $value)
     {
         $this->globals[$name] = $value;
         $this->engine->assign($name, $value);
@@ -105,17 +109,9 @@ class SmartyEngine
      *
      * @return array
      */
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return $this->globals;
-    }
-
-    /**
-     * @param string $cacheId
-     */
-    public function setCacheId($cacheId)
-    {
-        $this->cacheId = $cacheId;
     }
 
     /**
@@ -123,7 +119,7 @@ class SmartyEngine
      *
      * @return string
      */
-    public function getDefaultFileExtension()
+    public function getDefaultFileExtension(): string
     {
         return 'tpl';
     }
@@ -136,7 +132,18 @@ class SmartyEngine
      */
     public function __set($name, $value)
     {
-        $this->engine->$name = $value;
+        if (property_exists($this->engine, $name)) {
+            $this->engine->$name = $value;
+        }
+    }
+
+    public function __isset($name)
+    {
+        if (property_exists($this->engine, $name)) {
+            isset($this->engine->$name);
+        }
+
+        return isset($this->$name);
     }
 
     /**

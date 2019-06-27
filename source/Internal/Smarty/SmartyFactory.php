@@ -37,7 +37,7 @@ class SmartyFactory implements SmartyFactoryInterface
     public function getSmarty() : \Smarty
     {
         if (!isset($this->smarty)) {
-            $this->buildSmarty();
+            $this->createSmarty();
         }
 
         return $this->smarty;
@@ -54,7 +54,7 @@ class SmartyFactory implements SmartyFactoryInterface
     /**
      * Create new smarty instance and configure it
      */
-    private function buildSmarty()
+    private function createSmarty()
     {
         $this->smarty = new \Smarty();
         $this->setSettings();

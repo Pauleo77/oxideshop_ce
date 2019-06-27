@@ -38,7 +38,7 @@ class SmartyContext extends BasicContext implements SmartyContextInterface
         $this->utilsView = $utilsView;
     }
 
-    /**TT
+    /**
      * @return bool
      */
     public function getTemplateEngineDebugMode(): bool
@@ -47,7 +47,7 @@ class SmartyContext extends BasicContext implements SmartyContextInterface
         return ($debugMode == 1 || $debugMode == 3 || $debugMode == 4);
     }
 
-    /**TT
+    /**
      * @return bool
      */
     public function showTemplateNames(): bool
@@ -56,15 +56,15 @@ class SmartyContext extends BasicContext implements SmartyContextInterface
         return ($debugMode == 8 && !$this->getBackendMode());
     }
 
-    /**TT
+    /**
      * @return bool
      */
     public function getTemplateSecurityMode(): bool
     {
-        return (bool) $this->getDemoShopMode();
+        return $this->getDemoShopMode();
     }
 
-    /**TT
+    /**
      * @return string
      */
     public function getTemplateCompileDirectory(): string
@@ -72,7 +72,7 @@ class SmartyContext extends BasicContext implements SmartyContextInterface
         return $this->utilsView->getSmartyDir();
     }
 
-    /**TT
+    /**
      * @return array
      */
     public function getTemplateDirectories(): array
@@ -80,7 +80,7 @@ class SmartyContext extends BasicContext implements SmartyContextInterface
         return $this->utilsView->getTemplateDirs();
     }
 
-    /**TT
+    /**
      * @return string
      */
     public function getTemplateCompileId(): string
@@ -88,7 +88,7 @@ class SmartyContext extends BasicContext implements SmartyContextInterface
         return $this->utilsView->getTemplateCompileId();
     }
 
-    /**TT
+    /**
      * @return bool
      */
     public function getTemplateCompileCheckMode(): bool
@@ -96,7 +96,7 @@ class SmartyContext extends BasicContext implements SmartyContextInterface
         return (bool) $this->getConfigParameter('blCheckTemplates');
     }
 
-    /**TT
+    /**
      * @return array
      */
     public function getSmartyPluginDirectories(): array
@@ -104,22 +104,12 @@ class SmartyContext extends BasicContext implements SmartyContextInterface
         return $this->utilsView->getSmartyPluginDirectories();
     }
 
-    /**TT
+    /**
      * @return int
      */
     public function getTemplatePhpHandlingMode(): int
     {
         return (int) $this->getConfigParameter('iSmartyPhpHandling');
-    }
-
-    /**
-     * @return string
-     */
-    public function getShopTemplatePluginDirectory(): string
-    {
-        $coreDirectory = $this->getConfigParameter('sCoreDir');
-
-        return $coreDirectory . 'Smarty/Plugin';
     }
 
     /**
@@ -134,6 +124,7 @@ class SmartyContext extends BasicContext implements SmartyContextInterface
 
     /**
      * @param string $name
+     *
      * @return mixed
      */
     private function getConfigParameter($name)
@@ -144,7 +135,7 @@ class SmartyContext extends BasicContext implements SmartyContextInterface
     /**
      * @return bool
      */
-    private function getBackendMode()
+    private function getBackendMode(): bool
     {
         return $this->config->isAdmin();
     }
@@ -152,8 +143,8 @@ class SmartyContext extends BasicContext implements SmartyContextInterface
     /**
      * @return bool
      */
-    private function getDemoShopMode()
+    private function getDemoShopMode(): bool
     {
-        return $this->config->isDemoShop();
+        return (bool) $this->config->isDemoShop();
     }
 }

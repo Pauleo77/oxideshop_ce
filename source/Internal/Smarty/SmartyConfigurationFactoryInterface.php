@@ -12,8 +12,9 @@ namespace OxidEsales\EshopCommunity\Internal\Smarty;
  */
 interface SmartyConfigurationFactoryInterface
 {
+
     /**
      * @return array
      */
-    public function getConfiguration();
+    public function getConfiguration(): array;
 }

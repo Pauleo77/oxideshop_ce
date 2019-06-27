@@ -7,7 +7,6 @@
 namespace OxidEsales\EshopCommunity\Internal\Smarty;
 
 use OxidEsales\EshopCommunity\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Smarty\Extension\CacheResourcePlugin;
 
 /**
  * Class SmartyConfigurationFactory
@@ -31,9 +30,11 @@ class SmartyConfigurationFactory implements SmartyConfigurationFactoryInterface
     }
 
     /**
-     * Define basic smarty settings
+     * Define and return basic smarty settings
+     *
+     * @return array
      */
-    private function getSettings()
+    private function getSettings(): array
     {
         $compilePath = $this->getTemplateCompilePath();
         return [
@@ -51,9 +52,11 @@ class SmartyConfigurationFactory implements SmartyConfigurationFactoryInterface
     }
 
     /**
-     * Define smarty security settings.
+     * Define and return smarty security settings.
+     *
+     * @return array
      */
-    private function getSecuritySettings()
+    private function getSecuritySettings(): array
     {
         $configuration = [
             'php_handling' => (int) $this->context->getTemplatePhpHandlingMode(),
@@ -75,17 +78,21 @@ class SmartyConfigurationFactory implements SmartyConfigurationFactoryInterface
     }
 
     /**
-     * Collect smarty plugins.
+     * Return smarty plugins.
+     *
+     * @return array
      */
-    private function getPlugins()
+    private function getPlugins(): array
     {
         return $this->context->getSmartyPluginDirectories();
     }
 
     /**
-     * Sets an array of prefilters.
+     * Sets and returns an array of prefilters.
+     *
+     * @return array
      */
-    private function getPrefilterPlugin()
+    private function getPrefilterPlugin(): array
     {
         $prefilterPath = $this->getPrefilterPath();
         $prefilter['smarty_prefilter_oxblock'] = $prefilterPath . '/prefilter.oxblock.php';
@@ -97,9 +104,11 @@ class SmartyConfigurationFactory implements SmartyConfigurationFactoryInterface
     }
 
     /**
-     * Sets an array of resources.
+     * Sets and returns an array of resources.
+     *
+     * @return array
      */
-    private function getResources()
+    private function getResources(): array
     {
         return [
             'ox' => [
@@ -115,7 +124,7 @@ class SmartyConfigurationFactory implements SmartyConfigurationFactoryInterface
     /**
      * @return string
      */
-    private function getPrefilterPath() : string
+    private function getPrefilterPath(): string
     {
         return $this->context->getSourcePath() . '/Core/Smarty/Plugin';
     }
@@ -141,7 +150,7 @@ class SmartyConfigurationFactory implements SmartyConfigurationFactoryInterface
     }
 
     /**
-     * Get properties for smarty:
+     * Get settings for smarty:
      * [
      *   'settings' => 'smartyCommonSettings',
      *   'security_settings' => 'smartySecuritySettings',
@@ -152,7 +161,7 @@ class SmartyConfigurationFactory implements SmartyConfigurationFactoryInterface
      *
      * @return array
      */
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'settings' => $this->getSettings(),

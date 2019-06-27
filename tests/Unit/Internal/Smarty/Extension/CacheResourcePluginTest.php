@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -9,7 +9,7 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Smarty\Extension;
 use OxidEsales\EshopCommunity\Internal\Smarty\Extension\CacheResourcePlugin;
 use OxidEsales\EshopCommunity\Internal\Smarty\SmartyContextInterface;
 
-class oxSmartyTest extends \PHPUnit\Framework\TestCase
+class CacheResourcePluginTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetTemplate()
     {

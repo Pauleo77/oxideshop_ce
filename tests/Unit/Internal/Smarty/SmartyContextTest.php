@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -113,17 +113,16 @@ class SmartyContextTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(1, $smartyContext->getTemplatePhpHandlingMode());
     }
 
-    public function testGetShopTemplatePluginDirectory()
+    public function testGetSmartyPluginDirectories()
     {
         $config = $this->getConfigMock();
-        $config->method('getConfigParam')
-            ->with('sCoreDir')
-            ->will($this->returnValue('CoreDir/'));
 
         $utilsView = $this->getUtilsViewMock();
+        $utilsView->method('getSmartyPluginDirectories')
+            ->will($this->returnValue(['CoreDir/Smarty/Plugin']));
 
         $smartyContext = new SmartyContext($config, $utilsView);
-        $this->assertSame('CoreDir/Smarty/Plugin', $smartyContext->getShopTemplatePluginDirectory());
+        $this->assertSame(['CoreDir/Smarty/Plugin'], $smartyContext->getSmartyPluginDirectories());
     }
 
     public function testGetTemplatePath()
@@ -173,17 +172,6 @@ class SmartyContextTest extends \PHPUnit\Framework\TestCase
         $smartyContext = new SmartyContext($config, $utilsView);
         $this->assertSame('testCompileId', $smartyContext->getTemplateCompileId());
     }
-
-   /* public function testGetSmartyPluginDirectories()
-    {
-        $config = $this->getConfigMock();
-        $utilsView = $this->getUtilsViewMock();
-        $utilsView->method('getShopSmartyPluginDirectories')
-            ->will($this->returnValue(['testShopDir']));
-
-        $smartyContext = new SmartyContext($config, $utilsView);
-        $this->assertSame(['testShopDir'], $smartyContext->getSmartyPluginDirectories());
-    }*/
 
     /**
      * @return Config

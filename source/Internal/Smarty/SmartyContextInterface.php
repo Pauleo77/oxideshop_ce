@@ -60,11 +60,6 @@ interface SmartyContextInterface extends BasicContextInterface
     public function getTemplatePhpHandlingMode(): int;
 
     /**
-     * @return string
-     */
-    public function getShopTemplatePluginDirectory(): string;
-
-    /**
      * @param string $templateName
      *
      * @return string
