@@ -137,15 +137,6 @@ class SmartyEngine implements TemplateEngineInterface
         }
     }
 
-    public function __isset($name)
-    {
-        if (property_exists($this->engine, $name)) {
-            isset($this->engine->$name);
-        }
-
-        return isset($this->$name);
-    }
-
     /**
      * Pass parameters to the Smarty instance.
      *

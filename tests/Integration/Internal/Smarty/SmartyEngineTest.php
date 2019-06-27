@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Smarty;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Smarty;
 
 use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Smarty\SmartyEngine;
